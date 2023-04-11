@@ -10,6 +10,59 @@
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd"
         logicalFilePath="db/changelog/R0.0.1/db.changelog.xml">
 
+        <changeSet id="create_table_t_organizations" author="Alex">
+            <preConditions>
+                <not>
+                    <tableExists tableName="t_organizations" />
+                </not>
+            </preConditions>
+            <createTable tableName="t_organizations">
+                <column name="id" type="serial">
+                    <constraints primaryKey="true" primaryKeyName="t_organizations_pk"/>
+                </column>
+                <column name="name" type="varchar2">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="address" type="varchar2" />
+                <column name="vat" type="varchar2"/>
+                <column name="director" type="varchar2">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="chief_accountant">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+        </changeSet>
+
+        <changeSet id="create_index_t_organizations_name_idx" author="Alex">
+            <preConditions>
+                <and>
+                    <tableExists tableName="t_organizations"/>
+                    <not>
+                        <indexExists tableName="t_organizations_name_idx" columnNames="name"/>
+                    </not>
+                </and>
+            </preConditions>
+            <createIndex tableName="t_organizations" indexName="t_organizations_name_idx">
+                <column name="name" />
+            </createIndex>
+        </changeSet>
+
+        <changeSet id="create_index_t_organizations_vat_idx" author="Alex">
+            <preConditions>
+                <and>
+                    <tableExists tableName="t_organizations"/>
+                    <not>
+                        <indexExists tableName="t_organizations_vat_idx" columnNames="vat"/>
+                    </not>
+                </and>
+            </preConditions>
+            <createIndex tableName="t_organizations" indexName="t_organizations_vat_idx">
+                <column name="vat">
+                    <constraints unique="true" uniqueConstraintName="t_organizations_vat_unq" />
+                </column>
+            </createIndex>
+        </changeSet>
 
 
 </databaseChangeLog>

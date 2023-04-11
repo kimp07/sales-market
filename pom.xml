@@ -22,12 +22,15 @@
 		<module>market-api</module>
 		<module>market-service</module>
 		<module>market-security</module>
+		<module>market-domain</module>
 	</modules>
 	<properties>
 		<java.version>17</java.version>
-		<apache.commons.version>3.12.0</apache.commons.version>
+		<apache-commons-lang3.version>3.12.0</apache-commons-lang3.version>
+		<apache-commons-collections.version>4.4</apache-commons-collections.version>
 		<revision>0.0.1</revision>
 		<jasypt.version>3.0.5</jasypt.version>
+		<application.name>sales.market</application.name>
 		<application.mainClass>org.alex.sales.market.starter.MarketApplication</application.mainClass>
 	</properties>
 	<dependencies>
@@ -65,7 +68,12 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>${apache.commons.version}</version>
+			<version>${apache-commons-lang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${apache-commons-collections.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -86,6 +94,7 @@
 				</configuration>
 				<executions>
 					<execution>
+						<phase>package</phase>
 						<goals>
 							<goal>repackage</goal>
 						</goals>
