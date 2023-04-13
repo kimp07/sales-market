@@ -2,13 +2,9 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
-        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-        <include file="db/changelog/R0.0.1/db.changelog.xml" />
+        <include file="migrates/R0.0.1-changelog.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>
