@@ -3,64 +3,94 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd" >
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+    <!-- Table table_t_organizations -->
+    <changeSet id="create_table_t_organizations" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="t_organizations"/>
+            </not>
+        </preConditions>
+        <createTable tableName="t_organizations">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="t_organizations_pk"/>
+            </column>
+            <column name="name" type="varchar2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="legal_address" type="varchar2"/>
+            <column name="mail_address" type="varchar2"/>
+            <column name="vat" type="varchar2"/>
+            <column name="director" type="varchar2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chief_accountant" type="varchar2">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
-        <changeSet id="create_table_t_organizations" author="Alex">
-            <preConditions onFail="MARK_RAN">
+    <changeSet id="create_index_t_organizations_name_idx" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="t_organizations"/>
                 <not>
-                    <tableExists tableName="t_organizations" />
+                    <indexExists
+                            indexName="t_organizations_name_idx"
+                            tableName="t_organizations"
+                            columnNames="name"/>
                 </not>
-            </preConditions>
-            <createTable tableName="t_organizations">
-                <column name="id" type="serial">
-                    <constraints primaryKey="true" primaryKeyName="t_organizations_pk"/>
-                </column>
-                <column name="name" type="varchar2">
-                    <constraints nullable="false"/>
-                </column>
-                <column name="address" type="varchar2" />
-                <column name="vat" type="varchar2"/>
-                <column name="director" type="varchar2">
-                    <constraints nullable="false"/>
-                </column>
-                <column name="chief_accountant" type="varchar2">
-                    <constraints nullable="false"/>
-                </column>
-            </createTable>
-        </changeSet>
+            </and>
+        </preConditions>
+        <createIndex tableName="t_organizations" indexName="t_organizations_name_idx">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
 
-        <changeSet id="create_index_t_organizations_name_idx" author="Alex">
-            <preConditions onFail="MARK_RAN">
-                <and>
-                    <tableExists tableName="t_organizations"/>
-                    <not>
-                        <indexExists
-                                indexName="t_organizations_name_idx"
-                                tableName="t_organizations"
-                                columnNames="name"/>
-                    </not>
-                </and>
-            </preConditions>
-            <createIndex tableName="t_organizations" indexName="t_organizations_name_idx">
-                <column name="name" />
-            </createIndex>
-        </changeSet>
+    <changeSet id="create_index_t_organizations_vat_idx" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="t_organizations"/>
+                <not>
+                    <indexExists
+                            indexName="t_organizations_vat_idx"
+                            tableName="t_organizations"
+                            columnNames="vat"/>
+                </not>
+            </and>
+        </preConditions>
+        <createIndex tableName="t_organizations" indexName="t_organizations_vat_idx" unique="true">
+            <column name="vat"/>
+        </createIndex>
+    </changeSet> <!-- Table table_t_organizations -->
 
-        <changeSet id="create_index_t_organizations_vat_idx" author="Alex">
-            <preConditions onFail="MARK_RAN">
-                <and>
-                    <tableExists tableName="t_organizations"/>
-                    <not>
-                        <indexExists
-                                indexName="t_organizations_vat_idx"
-                                tableName="t_organizations"
-                                columnNames="vat"/>
-                    </not>
-                </and>
-            </preConditions>
-            <createIndex tableName="t_organizations" indexName="t_organizations_vat_idx" unique="true">
-                <column name="vat"/>
-            </createIndex>
-        </changeSet>
+    <!-- Table table_t_markets -->
+
+    <changeSet id="create_table_t_markets" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="t_markets"/>
+            </not>
+        </preConditions>
+        <createTable tableName="t_markets">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="t_markets_pk"/>
+            </column>
+            <column name="organisation_id" type="bigint">
+                <constraints
+                        foreignKeyName="t_markets_organization_id_fk"
+                        nullable="false"
+                        referencedTableName="t_organizations"
+                        referencedColumnNames="id"
+                        deleteCascade="true"/>
+            </column>
+            <column name="name" type="varchar2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar2"/>
+        </createTable>
+    </changeSet>
+
+
 
 </databaseChangeLog>

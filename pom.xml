@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.10</version>
+        <version>3.0.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.alex.sales</groupId>
@@ -29,21 +29,32 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <project.build.source.encoding>UTF-8</project.build.source.encoding>
+
+        <revision>0.0.1</revision>
+
         <apache-commons-lang3.version>3.12.0</apache-commons-lang3.version>
         <apache-commons-collections.version>4.4</apache-commons-collections.version>
         <revision>0.0.1</revision>
-        <jasypt.version>2.1.2</jasypt.version>
+
         <application.name>sales.market</application.name>
         <application.mainClass>org.alex.sales.market.starter.MarketApplication</application.mainClass>
-        <!-- Spring properties -->
         <app.name>market</app.name>
         <app.description>Application for market</app.description>
         <app.version>${revision}</app.version>
         <app.build.timestamp>${maven.build.timestamp}</app.build.timestamp>
+
         <maven.build.timestamp.format>yyyy-MM-dd-HH:mm</maven.build.timestamp.format>
-        <liquibase.version>4.8.0</liquibase.version>
+
+        <liquibase.version>4.21.0</liquibase.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
+        <jasypt.version>3.0.4</jasypt.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
