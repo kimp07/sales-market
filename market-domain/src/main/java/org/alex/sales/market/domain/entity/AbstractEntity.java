@@ -11,11 +11,7 @@ import java.util.Objects;
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class AbstractEntity<ID> {
-
-    public abstract @NonNull ID getId();
-
-    public abstract void setId(@Nonnull ID id);
+public abstract class AbstractEntity<ID> implements Entity<ID> {
 
     @Override
     @SuppressWarnings("rawtypes")
