@@ -44,5 +44,8 @@ public class Organization extends AbstractEntity<Long> {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "organization")
     @BatchSize(size = EntityProperties.BATCH_SIZE)
     private List<Market> markets;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "organization")
+    @BatchSize(size = EntityProperties.BATCH_SIZE)
+    private User users;
 
 }

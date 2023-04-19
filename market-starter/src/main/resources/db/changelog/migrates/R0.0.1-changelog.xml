@@ -4,15 +4,16 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
     <!-- Table table_t_organizations -->
-    <changeSet id="create_table_t_organizations" author="Alex">
+    <changeSet id="v0.0.1_create_table_t_organizations" author="Alex">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="t_organizations"/>
             </not>
         </preConditions>
         <createTable tableName="t_organizations">
-            <column name="id" type="serial">
+            <column name="id" autoIncrement="true" type="bigint">
                 <constraints primaryKey="true" primaryKeyName="t_organizations_pk"/>
             </column>
             <column name="name" type="varchar2">
@@ -30,7 +31,8 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="create_index_t_organizations_name_idx" author="Alex">
+    <!-- Index t_organizations_vat_idx -->
+    <changeSet id="v0.0.1_t_organizations_name_idx" author="Alex">
         <preConditions onFail="MARK_RAN">
             <and>
                 <tableExists tableName="t_organizations"/>
@@ -45,9 +47,10 @@
         <createIndex tableName="t_organizations" indexName="t_organizations_name_idx">
             <column name="name"/>
         </createIndex>
-    </changeSet>
+    </changeSet><!-- //Index t_organizations_vat_idx -->
 
-    <changeSet id="create_index_t_organizations_vat_idx" author="Alex">
+    <!-- Index t_organizations_vat_idx -->
+    <changeSet id="v0.0.1_create_index_t_organizations_vat_idx" author="Alex">
         <preConditions onFail="MARK_RAN">
             <and>
                 <tableExists tableName="t_organizations"/>
@@ -62,18 +65,17 @@
         <createIndex tableName="t_organizations" indexName="t_organizations_vat_idx" unique="true">
             <column name="vat"/>
         </createIndex>
-    </changeSet> <!-- Table table_t_organizations -->
+    </changeSet> <!-- Index //t_organizations_vat_idx -->
 
-    <!-- Table table_t_markets -->
-
-    <changeSet id="create_table_t_markets" author="Alex">
+    <!-- Table t_markets -->
+    <changeSet id="v0.0.1_create_table_t_markets" author="Alex">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="t_markets"/>
             </not>
         </preConditions>
         <createTable tableName="t_markets">
-            <column name="id" type="serial">
+            <column name="id" autoIncrement="true" type="bigint">
                 <constraints primaryKey="true" primaryKeyName="t_markets_pk"/>
             </column>
             <column name="organisation_id" type="bigint">
@@ -89,8 +91,121 @@
             </column>
             <column name="address" type="varchar2"/>
         </createTable>
+    </changeSet> <!-- //Table t_markets -->
+
+    <!-- Table t_roles -->
+    <changeSet id="v0.0.1_create_table_t_roles" author="alex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="t_roles"/>
+            </not>
+        </preConditions>
+        <createTable tableName="t_roles">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="t_roles_pk"/>
+            </column>
+            <column name="role_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_disabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet><!-- //TABLE t_roles -->
+    <!-- TABLE t_users -->
+    <changeSet  id="create_table_t_users" author="alex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="t_users"/>
+            </not>
+        </preConditions>
+        <createTable tableName="t_users">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="t_users_pk"/>
+            </column>
+            <column name="user_login" type="varchar(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="t_users_user_login_unique"/>
+            </column>
+            <column name="user_password" type="varchar(512)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="t_users_email_unique"/>
+            </column>
+            <column name="u_enabled" type="boolean" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="u_non_locked" type="boolean" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="u_non_expired" type="boolean" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="u_credentials_non_expired" type="boolean" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="varchar(512)"/>
+            <column name="first_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organization_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="t_users_organization_id_fk"
+                             referencedTableName="t_organizations"
+                             referencedColumnNames="id"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+    </changeSet><!-- //TABLE t_users -->
+    <!-- TABLE t_users INDEXES-->
+    <changeSet author="alex" id="v0.0.1_create_index_t_users_login_idx">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="t_users_login_idx" tableName="t_users"/>
+            </not>
+        </preConditions>
+        <createIndex indexName="t_users_login_idx" tableName="t_users">
+            <column name="user_login"/>
+        </createIndex>
     </changeSet>
+    <changeSet author="alex" id="v0.0.1_create_index_t_users_email_idx">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="t_users_email_idx" tableName="t_users"/>
+            </not>
+        </preConditions>
+        <createIndex indexName="t_users_email_idx" tableName="t_users">
+            <column name="email"/>
+        </createIndex>
+    </changeSet> <!-- //TABLE t_users INDEXES -->
 
-
+    <!-- TABLE t_users_roles -->
+    <changeSet  id="v0.0.1_create_table_t_users_roles" author="alex">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="t_users_roles"/>
+            </not>
+        </preConditions>
+        <createTable tableName="t_users_roles">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="t_users_roles_user_id_fk"
+                             referencedTableName="t_users"
+                             referencedColumnNames="id"
+                             deleteCascade="true"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="t_users_roles_role_id_fk"
+                             referencedTableName="t_roles"
+                             referencedColumnNames="id"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="t_users_roles" columnNames="user_id, role_id" constraintName="t_users_roles_pk"/>
+    </changeSet><!-- //TABLE t_users_roles -->
 
 </databaseChangeLog>
