@@ -48,6 +48,7 @@
         <liquibase.version>4.21.0</liquibase.version>
         <snakeyaml.version>2.0</snakeyaml.version>
         <jasypt.version>3.0.4</jasypt.version>
+        <jsr.version>3.0.2</jsr.version>
     </properties>
     <dependencies>
         <dependency>
@@ -99,6 +100,11 @@
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
             <version>${jasypt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>${jsr.version}</version>
         </dependency>
     </dependencies>
 
