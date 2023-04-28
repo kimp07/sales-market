@@ -26,5 +26,9 @@ public class Role extends AbstractEntity<Long> {
     private String roleName;
     @Column(name = "role_disabled")
     private Boolean roleDisabled;
+    @Column(name = "is_root_role")
+    private Boolean isRootRole;
+    @Column(name = "description")
+    private String description;
 
 }

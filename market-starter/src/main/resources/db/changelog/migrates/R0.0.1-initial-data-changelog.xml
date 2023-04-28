@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="v0.0.1_add_root_organization" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="t_organizations"/>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(t.id) FROM t_organizations t WHERE t.name = 'ROOT_ORGANIZATION'
+                </sqlCheck>
+            </and>
+        </preConditions>
+        <insert tableName="t_organizations">
+            <column name="name">ROOT_ORGANIZATION</column>
+            <column name="director">ROOT</column>
+            <column name="chief_accountant">ROOT</column>
+            <column name="vat">0000000000</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="v0.0.1_add_root_admin_role" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="t_roles"/>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(t.id) FROM t_roles t WHERE t.role_name = 'ROOT_ADMIN'
+                </sqlCheck>
+            </and>
+        </preConditions>
+        <insert tableName="t_roles">
+            <column name="role_name">ROOT_ADMIN</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="v0.0.1_add_root_moderator_role" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="t_roles"/>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(t.id) FROM t_roles t WHERE t.role_name = 'ROOT_MODERATOR'
+                </sqlCheck>
+            </and>
+        </preConditions>
+        <insert tableName="t_roles">
+            <column name="role_name">ROOT_MODERATOR</column>
+            <column name="is_root_role">true</column>
+            <column name="description">Root administrator</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="v0.0.1_add_organization_admin" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="t_roles"/>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(t.id) FROM t_roles t WHERE t.role_name = 'ORGANIZATION_ADMIN'
+                </sqlCheck>
+            </and>
+        </preConditions>
+        <insert tableName="t_roles">
+            <column name="role_name">ORGANIZATION_ADMIN</column>
+            <column name="is_root_role">false</column>
+            <column name="description">Organization administrator</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="v0.0.1_add_organization_user" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="t_roles"/>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(t.id) FROM t_roles t WHERE t.role_name = 'ORGANIZATION_USER'
+                </sqlCheck>
+            </and>
+        </preConditions>
+        <insert tableName="t_roles">
+            <column name="role_name">ORGANIZATION_USER</column>
+            <column name="is_root_role">false</column>
+            <column name="description">Organization user</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="v0.0.1_add_user_root_admin" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="t_users"/>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(t.id) FROM t_users t WHERE t.user_login = 'ROOT_ADMIN'
+                </sqlCheck>
+            </and>
+        </preConditions>
+        <insert tableName="t_users">
+            <column name="user_login">ROOT_ADMIN</column>
+            <column name="user_password">9rk1JBlQwPcFDHuOB3H1Bzc8usjzWIPD</column>
+            <column name="email">kimp07@gmail.com</column>
+            <column name="first_name">ADMIN</column>
+            <column name="surname">ADMIN</column>
+            <column name="organization_id"
+                    valueComputed="(SELECT t.id FROM t_organizations t WHERE t.name = 'ROOT_ORGANIZATION')" />
+        </insert>
+    </changeSet>
+
+    <changeSet id="v0.0.1_add_pair_users_roles_root_admin" author="Alex">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="t_users_roles"/>
+                <sqlCheck expectedResult="1">
+                    SELECT COUNT(t.id) FROM t_users WHERE t.user_login = 'ROOT_ADMIN'
+                </sqlCheck>
+                <sqlCheck expectedResult="1">
+                    SELECT COUNT(t.id) FROM t_rolers WHERE t.role_name = 'ROOT_ADMIN'
+                </sqlCheck>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(*) FROM t_users_roles WHERE
+                    user_id != (SELECT id FROM t_users WHERE user_login = 'ROOT_ADMIN') AND
+                    role_id != (SELECT id FROM t_roles WHERE role_name = 'ROOT_ADMIN')
+                </sqlCheck>
+            </and>
+        </preConditions>
+        <insert tableName="t_users_roles">
+            <column name="user_id" valueComputed="(SELECT id FROM t_users WHERE user_login = 'ROOT_ADMIN')" />
+            <column name="role_id" valueComputed="(SELECT id FROM t_roles WHERE role_name = 'ROOT_ADMIN')"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

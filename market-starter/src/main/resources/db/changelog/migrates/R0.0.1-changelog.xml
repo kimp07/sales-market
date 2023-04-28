@@ -21,7 +21,9 @@
             </column>
             <column name="legal_address" type="varchar2"/>
             <column name="mail_address" type="varchar2"/>
-            <column name="vat" type="varchar2"/>
+            <column name="vat" type="varchar2">
+                <constraints nullable="false"/>
+            </column>
             <column name="director" type="varchar2">
                 <constraints nullable="false"/>
             </column>
@@ -104,12 +106,16 @@
             <column autoIncrement="true" name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="t_roles_pk"/>
             </column>
-            <column name="role_name" type="varchar(50)">
+            <column name="role_name" type="varchar2">
                 <constraints nullable="false"/>
             </column>
-            <column name="role_disabled" type="boolean">
+            <column name="role_disabled" type="boolean" defaultValue="false">
                 <constraints nullable="false"/>
             </column>
+            <column name="is_root_role" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar2"/>
         </createTable>
     </changeSet><!-- //TABLE t_roles -->
     <!-- TABLE t_users -->
@@ -123,10 +129,10 @@
             <column autoIncrement="true" name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="t_users_pk"/>
             </column>
-            <column name="user_login" type="varchar(50)">
+            <column name="user_login" type="varchar2">
                 <constraints nullable="false" unique="true" uniqueConstraintName="t_users_user_login_unique"/>
             </column>
-            <column name="user_password" type="varchar(512)">
+            <column name="user_password" type="varchar2">
                 <constraints nullable="false"/>
             </column>
             <column name="email" type="varchar(100)">
@@ -157,6 +163,12 @@
                              referencedTableName="t_organizations"
                              referencedColumnNames="id"
                              deleteCascade="true"/>
+            </column>
+            <column name="registration_date"
+                    type="timestamp(6)"
+                    defaultValueComputed="timezone('UTC', now())"
+                    defaultOnNull="true">
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet><!-- //TABLE t_users -->

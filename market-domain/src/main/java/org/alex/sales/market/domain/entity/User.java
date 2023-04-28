@@ -57,5 +57,7 @@ public class User extends AbstractEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organization_id", referencedColumnName = "id", nullable = false)
     private Organization organization;
+    @Column(name = "registration_date")
+    private Timestamp registrationDate;
 
 }

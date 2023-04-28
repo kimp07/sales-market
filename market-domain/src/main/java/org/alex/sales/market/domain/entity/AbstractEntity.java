@@ -1,11 +1,9 @@
 package org.alex.sales.market.domain.entity;
 
-import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.annotation.Nonnull;
 import java.util.Objects;
 
 @MappedSuperclass
