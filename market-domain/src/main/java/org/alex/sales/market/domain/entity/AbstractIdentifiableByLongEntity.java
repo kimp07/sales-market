@@ -9,14 +9,16 @@ import java.util.Objects;
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class AbstractEntity<ID> implements Entity<ID> {
+public abstract class AbstractIdentifiableByLongEntity<ID> {
+
+    public abstract ID getId();
 
     @Override
     @SuppressWarnings("rawtypes")
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        Class<? extends AbstractEntity> currentClass = getClass();
+        Class<? extends AbstractIdentifiableByLongEntity> currentClass = getClass();
         if (o.getClass() != getClass()) return false;
         return currentClass.isInstance(o) && Objects.equals(currentClass.cast(o).getId(), getId());
     }

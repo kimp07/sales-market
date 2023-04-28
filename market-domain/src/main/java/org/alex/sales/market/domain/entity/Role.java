@@ -13,7 +13,7 @@ import lombok.Setter;
 @Table(name = Role.TABLE_NAME)
 @Getter
 @Setter
-public class Role extends AbstractEntity<Long> {
+public class Role extends AbstractIdentifiableByLongEntity<Long> {
 
     public static final String ENTITY_NAME = "Role";
     public static final String TABLE_NAME = "t_roles";

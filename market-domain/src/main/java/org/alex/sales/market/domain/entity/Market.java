@@ -16,7 +16,7 @@ import lombok.Setter;
 @Table(name = Market.TABLE_NAME)
 @Getter
 @Setter
-public class Market extends AbstractEntity<Long> {
+public class Market extends AbstractIdentifiableByLongEntity<Long> {
 
     public static final String ENTITY_NAME = "Market";
     public static final String TABLE_NAME = "t_markets";

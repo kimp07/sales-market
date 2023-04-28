@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 @Table(name = User.TABLE_NAME)
 @Getter
 @Setter
-public class User extends AbstractEntity<Long> {
+public class User extends AbstractIdentifiableByLongEntity<Long> {
 
     public static final String ENTITY_NAME = "User";
     public static final String TABLE_NAME = "t_users";

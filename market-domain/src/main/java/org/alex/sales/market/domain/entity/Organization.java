@@ -19,7 +19,7 @@ import java.util.List;
 @Table(name = Organization.TABLE_NAME)
 @Getter
 @Setter
-public class Organization extends AbstractEntity<Long> {
+public class Organization extends AbstractIdentifiableByLongEntity<Long> {
 
     public static final String ENTITY_NAME = "Organization";
     public static final String TABLE_NAME = "t_organizations";
