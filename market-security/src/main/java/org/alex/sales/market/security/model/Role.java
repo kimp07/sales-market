@@ -1,4 +1,4 @@
-package org.alex.sales.market.security;
+package org.alex.sales.market.security.model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

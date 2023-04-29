@@ -35,6 +35,12 @@
             <version>${revision}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.alex.sales</groupId>
+            <artifactId>market-data</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

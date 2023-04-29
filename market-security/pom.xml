@@ -17,4 +17,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>org.alex.sales</groupId>
+            <artifactId>market-service</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+    </dependencies>
+
 </project>

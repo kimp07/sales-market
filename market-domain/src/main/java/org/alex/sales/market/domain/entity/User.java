@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity(name = User.ENTITY_NAME)
 @Table(name = User.TABLE_NAME)
@@ -32,10 +35,14 @@ public class User extends AbstractIdentifiableByLongEntity<Long> {
     private String login;
     @Column(name = "user_password")
     private String password;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "t_roles",
+            joinColumns = {@JoinColumn(name = "client_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
     @BatchSize(size = EntityProperties.BATCH_SIZE)
-    private Role role;
+    private List<Role> roles;
     @Column(name = "email")
     private String email;
     @Column(name = "about_me")
