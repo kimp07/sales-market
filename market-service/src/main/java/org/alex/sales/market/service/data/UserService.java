@@ -1,4 +1,4 @@
-package org.alex.sales.market.service.api.data;
+package org.alex.sales.market.service.data;
 
 import org.alex.sales.market.domain.entity.User;
 import org.springframework.data.domain.Page;

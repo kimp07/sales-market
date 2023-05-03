@@ -9,7 +9,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alex.sales.market.domain.entity.User;
-import org.alex.sales.market.security.api.JwtProvider;
+import org.alex.sales.market.security.JwtProvider;
 import org.alex.sales.market.security.model.TokenClaims;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -49,6 +49,7 @@ public class JwtProviderImpl implements JwtProvider {
                 .signWith(jwtAccessSecret)
                 .claim(TokenClaims.ROLES.name(), user.getRoles())
                 .claim(TokenClaims.USER_LOGIN.name(), user.getLogin())
+                .claim(TokenClaims.USER_NAME.name(), user.getFirstName())
                 .claim(TokenClaims.ORGANIZATION.name(), user.getOrganization().getName())
                 .compact();
     }

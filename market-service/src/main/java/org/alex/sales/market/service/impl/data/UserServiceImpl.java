@@ -1,7 +1,7 @@
 package org.alex.sales.market.service.impl.data;
 
 import lombok.RequiredArgsConstructor;
-import org.alex.sales.market.service.api.data.UserService;
+import org.alex.sales.market.service.data.UserService;
 import org.alex.sales.market.data.UserRepository;
 import org.alex.sales.market.domain.entity.User;
 import org.springframework.data.domain.Page;

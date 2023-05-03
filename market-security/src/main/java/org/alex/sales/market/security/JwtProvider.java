@@ -1,4 +1,4 @@
-package org.alex.sales.market.security.api;
+package org.alex.sales.market.security;
 
 import io.jsonwebtoken.Claims;
 import org.alex.sales.market.domain.entity.User;
