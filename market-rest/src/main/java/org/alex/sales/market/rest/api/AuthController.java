@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    public static final String API_AUTH = "api/auth";
+    public static final String API_AUTH = "/api/auth";
 
     private static final String LOGIN = "/login";
     private static final String TOKEN = "/token";

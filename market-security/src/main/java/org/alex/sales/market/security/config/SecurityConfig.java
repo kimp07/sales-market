@@ -10,31 +10,47 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
-    private static final String[] REQUEST_MATCHERS = {"/api/auth/login", "/api/auth/token"};
+    private static final String[] REQUEST_MATCHERS = {"/api/auth/login", "/api/auth/token", "/api/auth/repair"};
 
     private final JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .httpBasic().disable()
+        http
+                .cors()
+                .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeHttpRequests(
-                        auth -> auth
-                                .requestMatchers(REQUEST_MATCHERS).permitAll()
+                .httpBasic().disable()
+                .exceptionHandling()
+                .and()
+                .authorizeHttpRequests(requests ->
+                        requests.requestMatchers(getMatchers())
+                                .permitAll()
                                 .anyRequest().authenticated()
-                                .and()
-                                .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                ).build();
+                );
+        http
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
+
+    private AntPathRequestMatcher[] getMatchers() {
+        List<AntPathRequestMatcher> matchers = new ArrayList<>();
+        Arrays.stream(REQUEST_MATCHERS).forEach(path -> matchers.add(new AntPathRequestMatcher(path)));
+        return matchers.toArray(AntPathRequestMatcher[]::new);
     }
 
 }
