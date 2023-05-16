@@ -1,7 +1,6 @@
 package org.alex.sales.market.security.impl;
 
 import io.jsonwebtoken.Claims;
-import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.alex.sales.market.domain.entity.User;
 import org.alex.sales.market.security.AuthService;
@@ -14,6 +13,7 @@ import org.alex.sales.market.service.data.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 

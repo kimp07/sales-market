@@ -1,9 +1,10 @@
 package org.alex.sales.market.security;
 
-import jakarta.annotation.Nonnull;
 import org.alex.sales.market.security.model.JwtAuthentication;
 import org.alex.sales.market.security.model.JwtRequest;
 import org.alex.sales.market.security.model.JwtResponse;
+
+import javax.annotation.Nonnull;
 
 public interface AuthService {
 

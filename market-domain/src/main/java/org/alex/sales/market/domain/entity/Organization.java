@@ -46,6 +46,6 @@ public class Organization extends AbstractIdentifiableByLongEntity<Long> {
     private List<Market> markets;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "organization")
     @BatchSize(size = EntityProperties.BATCH_SIZE)
-    private User users;
+    private List<User> users;
 
 }

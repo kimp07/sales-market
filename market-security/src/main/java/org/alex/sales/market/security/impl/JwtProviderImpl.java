@@ -5,12 +5,17 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.alex.sales.market.domain.entity.User;
 import org.alex.sales.market.security.JwtProvider;
 import org.alex.sales.market.security.model.TokenClaims;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +38,8 @@ public class JwtProviderImpl implements JwtProvider {
     private static final String INVALID_SIGNATURE_EXCEPTION = "Invalid signature";
     private static final String INVALID_TOKEN_EXCEPTION = "invalid token";
 
-    @Value("${sales.market.security.token.secret-access-key}")
-    private final SecretKey jwtAccessSecret;
-
-    @Value("${sales.market.security.token.secret-refresh-key}")
-    private final SecretKey jwtRefreshSecret;
+    private SecretKey jwtAccessSecret;
+    private SecretKey jwtRefreshSecret;
 
     public String generateAccessToken(@Nonnull User user) {
         final LocalDateTime now = LocalDateTime.now();
