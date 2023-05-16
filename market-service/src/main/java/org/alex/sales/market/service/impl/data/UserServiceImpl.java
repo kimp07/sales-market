@@ -1,9 +1,9 @@
 package org.alex.sales.market.service.impl.data;
 
 import lombok.RequiredArgsConstructor;
-import org.alex.sales.market.service.data.UserService;
 import org.alex.sales.market.data.UserRepository;
 import org.alex.sales.market.domain.entity.User;
+import org.alex.sales.market.service.data.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
