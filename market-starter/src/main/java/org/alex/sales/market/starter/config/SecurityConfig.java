@@ -10,11 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -45,12 +40,6 @@ public class SecurityConfig {
         http
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-    }
-
-    private AntPathRequestMatcher[] getMatchers() {
-        List<AntPathRequestMatcher> matchers = new ArrayList<>();
-        Arrays.stream(REQUEST_MATCHERS).forEach(path -> matchers.add(new AntPathRequestMatcher(path)));
-        return matchers.toArray(AntPathRequestMatcher[]::new);
     }
 
 }
