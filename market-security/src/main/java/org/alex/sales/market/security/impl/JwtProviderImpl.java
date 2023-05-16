@@ -32,8 +32,8 @@ public class JwtProviderImpl implements JwtProvider {
     private static final String INVALID_SIGNATURE_EXCEPTION = "Invalid signature";
     private static final String INVALID_TOKEN_EXCEPTION = "invalid token";
 
-    private SecretKey jwtAccessSecret;
-    private SecretKey jwtRefreshSecret;
+    private final SecretKey jwtAccessSecret;
+    private final SecretKey jwtRefreshSecret;
 
     public String generateAccessToken(@Nonnull User user) {
         final LocalDateTime now = LocalDateTime.now();
