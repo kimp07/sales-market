@@ -19,8 +19,7 @@ public class SalesMarketSecurityConfig {
     @Value("${sales.market.security.token.secret-refresh-key}")
     private String jwtRefreshSecretWord;
 
-    @Bean
-    @Qualifier("jwtAccessSecret")
+    @Bean(name = "jwtAccessSecret")
     public SecretKey getJwtAccessSecret() {
 
         return new SecretKeySpec(
@@ -29,8 +28,7 @@ public class SalesMarketSecurityConfig {
         );
     }
 
-    @Bean
-    @Qualifier("jwtRefreshSecret")
+    @Bean(name = "jwtRefreshSecret")
     public SecretKey getJwtRefreshSecret() {
         return new SecretKeySpec(
                 Base64.getEncoder().encode(jwtRefreshSecretWord.getBytes(StandardCharsets.UTF_8)),
